@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   week_of_year: ^2.0.0
+  xml: ^6.3.0
 
 dev_dependencies:
   flutter_test:

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gantt_chart/gantt_chart.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async{
+  runApp( const MyApp());
 }
 
 class MyCustomScrollBehavior extends MaterialScrollBehavior {
@@ -20,11 +20,15 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
+
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       scrollBehavior: MyCustomScrollBehavior(),
@@ -45,6 +49,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  Future<String> loadAsset() async {
+    return await rootBundle.loadString('assets/TA.pod.xml');
+  }
+  Future<String> clica() async{
+    var projectXML =  ProjectXml('path');
+
+    var x = projectXML.readXML(await loadAsset());
+    print(x);
+    return x.toString();
+  }
   final scrollController = ScrollController();
 
   double dayWidth = 30;
@@ -301,6 +315,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   )
                 ],
               ),
+              ElevatedButton(onPressed: () async{
+                await this.clica();
+                print( 'x=, x');
+              }, child: const Text( 'oi'))
             ],
           ),
         ),
